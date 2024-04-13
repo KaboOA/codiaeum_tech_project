@@ -12,10 +12,11 @@ class TransactionsScreen extends StatelessWidget {
           child: Text('Home'),
         ),
       ),
-      body: Center(
-          child: Container(
-        child: const Text('Transactions'),
-      )),
+      body: const Center(
+        child: Text(
+          'Transactions',
+        ),
+      ),
     );
   }
 }
