@@ -1,3 +1,4 @@
+import 'package:codiaeum_tech_project/DataModel.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
@@ -79,7 +80,8 @@ class TransactionsScreen extends StatelessWidget {
             ),
             Expanded(
                 child: ListView.separated(
-              itemBuilder: (context, index) => builditem(),
+              itemBuilder: (context, index) => builditem(DataModel(
+                  amount: 200, date: '2022-17-11', title: 'any shit')),
               separatorBuilder: (context, index) => const SizedBox(
                 height: 20,
               ),
@@ -91,10 +93,10 @@ class TransactionsScreen extends StatelessWidget {
     );
   }
 
-  Widget builditem() {
-    return const Row(
+  Widget builditem(DataModel model) {
+    return Row(
       children: [
-        Padding(
+        const Padding(
           padding: EdgeInsets.only(bottom: 10),
           child: CircleAvatar(
             radius: 25,
@@ -104,7 +106,7 @@ class TransactionsScreen extends StatelessWidget {
             ),
           ),
         ),
-        SizedBox(
+        const SizedBox(
           width: 20,
         ),
         Expanded(
@@ -112,28 +114,28 @@ class TransactionsScreen extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                'Transaction is Wrtitten here daskdnkladklasdkasidailsdklasdklaskldnklkl ',
+                '${model.title}',
                 maxLines: 3,
-                style: TextStyle(fontSize: 20),
+                style: const TextStyle(fontSize: 20),
               ),
-              SizedBox(
+              const SizedBox(
                 height: 5,
               ),
               Text(
-                'date here',
-                style: TextStyle(color: Colors.grey),
+                '${model.date}',
+                style: const TextStyle(color: Colors.grey),
               )
             ],
           ),
         ),
-        SizedBox(
+        const SizedBox(
           width: 10,
         ),
         Padding(
-          padding: EdgeInsetsDirectional.only(end: 15),
+          padding: const EdgeInsetsDirectional.only(end: 15),
           child: Text(
-            'EGP 3250',
-            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15),
+            '${model.amount}',
+            style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 15),
           ),
         ),
       ],
