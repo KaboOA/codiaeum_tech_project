@@ -91,9 +91,9 @@ class TransactionsScreen extends StatelessWidget {
   }
 
   Widget builditem() {
-    return const Row(
+    return Row(
       children: [
-        Padding(
+        const Padding(
           padding: EdgeInsets.only(bottom: 10),
           child: CircleAvatar(
             radius: 25,
@@ -103,13 +103,13 @@ class TransactionsScreen extends StatelessWidget {
             ),
           ),
         ),
-        SizedBox(
+        const SizedBox(
           width: 20,
         ),
-        SizedBox(
+        Container(
           width: 500,
-          // color: Colors.red,
-          child: Column(
+          color: Colors.red,
+          child: const Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
@@ -127,7 +127,7 @@ class TransactionsScreen extends StatelessWidget {
             ],
           ),
         ),
-        SizedBox(
+        const SizedBox(
           width: 10,
         ),
       ],
