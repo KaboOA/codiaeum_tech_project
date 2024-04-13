@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
@@ -91,9 +92,9 @@ class TransactionsScreen extends StatelessWidget {
   }
 
   Widget builditem() {
-    return Row(
+    return const Row(
       children: [
-        const Padding(
+        Padding(
           padding: EdgeInsets.only(bottom: 10),
           child: CircleAvatar(
             radius: 25,
@@ -103,19 +104,17 @@ class TransactionsScreen extends StatelessWidget {
             ),
           ),
         ),
-        const SizedBox(
+        SizedBox(
           width: 20,
         ),
-        Container(
-          width: 500,
-          color: Colors.red,
-          child: const Column(
+        Expanded(
+          child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                'Transaction is Wrtitten here ',
+                'Transaction is Wrtitten here daskdnkladklasdkasidailsdklasdklaskldnklkl ',
                 maxLines: 3,
-                style: TextStyle(fontSize: 25),
+                style: TextStyle(fontSize: 20),
               ),
               SizedBox(
                 height: 5,
@@ -127,8 +126,15 @@ class TransactionsScreen extends StatelessWidget {
             ],
           ),
         ),
-        const SizedBox(
+        SizedBox(
           width: 10,
+        ),
+        Padding(
+          padding: EdgeInsetsDirectional.only(end: 15),
+          child: Text(
+            'EGP 3250',
+            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15),
+          ),
         ),
       ],
     );
