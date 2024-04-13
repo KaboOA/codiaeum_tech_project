@@ -5,6 +5,17 @@ class TransactionsScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Placeholder();
+    return Scaffold(
+      appBar: AppBar(
+        title: const Padding(
+          padding: EdgeInsets.only(left: 20),
+          child: Text('Home'),
+        ),
+      ),
+      body: Center(
+          child: Container(
+        child: const Text('Transactions'),
+      )),
+    );
   }
 }
