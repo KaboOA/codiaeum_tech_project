@@ -14,28 +14,65 @@ class TransactionsCubit extends Cubit<TransactionsStates> {
   TextEditingController add_controller1 = TextEditingController();
   TextEditingController add_controller2 = TextEditingController();
   List<DataModel> models = [];
-//   void CreateTransaction(
-//       {required String title, required String date, required amount}) {
-//     DataModel model = DataModel(amount: amount, date: date, title: title);
-//     FirebaseFirestore.instance
-//         .collection('Transactions')
-//         .doc('transaction')
-//         .set(model.toMap())
-//         .then((value) {
-//       emit(CreateTransactionState());
-//     }).catchError((error) {});
-//   }
+  double balance = 0;
+  void CreateTransaction(
+      {required String title,
+      required String date,
+      required double amount,
+      required bool income}) {
+    // DataModel model = DataModel(amount: 100, date: 'date', title: 'title');
+
+    FirebaseFirestore.instance.collection('Transactions').doc().set({
+      'amount': amount,
+      'title': title,
+      'date': date,
+      'income': income
+    }).then((value) {
+      // print(model.toString());
+      emit(CreateTransactionState());
+    }).catchError((error) {
+      debugPrint(error.toString());
+    });
+  }
+
+  void updateBalance(amount) {
+    emit(GetLoadingBalanceState());
+    double newBalance = balance + amount;
+    FirebaseFirestore.instance
+        .collection('TotalMoney')
+        .doc('Money')
+        .update({"money": newBalance}).then((value) {
+      balance = newBalance;
+      emit(GetSuccessBalanceState());
+    }).catchError((error) {
+      emit(GetFailedBalanceState());
+    });
+  }
 
   void getData() {
+    models = [];
     emit(GetLoadingTransactionState());
     FirebaseFirestore.instance.collection('Transactions').get().then((value) {
-      for (var element in value.docs) {
-        models.add(DataModel.fromJson(element.data()));
+      for (int i = 0; i < value.docs.length; i++) {
+        models.add(DataModel.fromJson(value.docs[i].data()));
       }
-      debugPrint('wahba${models[0].title}');
       emit(GetSuccessTransactionState());
     }).catchError((error) {
       emit(GetFailedTransactionState());
+    });
+  }
+
+  void getBalance() {
+    emit(GetLoadingBalanceState());
+    FirebaseFirestore.instance
+        .collection('TotalMoney')
+        .doc('Money')
+        .get()
+        .then((value) {
+      balance = value.data()!['money'];
+      emit(GetSuccessBalanceState());
+    }).catchError((error) {
+      emit(GetFailedBalanceState());
     });
   }
 }
