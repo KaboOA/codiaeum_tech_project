@@ -9,29 +9,14 @@ class TransactionsScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    List<DataModel> models = [];
-    models.add(DataModel(
-        amount: 600,
-        date: 'Date is here ',
-        title: 'Transaction is Written here'));
-    models.add(DataModel(
-        amount: 300,
-        date: 'Date is here',
-        title: 'Transaction is Written here'));
-    models.add(DataModel(
-        amount: 400,
-        date: 'Date is here',
-        title: 'Transaction is Written here'));
-    models.add(DataModel(
-        amount: 500,
-        date: 'Date is here',
-        title: 'Transaction is Written here'));
-
     return BlocProvider(
-      create: (context) => TransactionsCubit(),
+      create: (context) => TransactionsCubit()
+        ..getData()
+        ..getBalance(),
       child: BlocConsumer<TransactionsCubit, TransactionsStates>(
         listener: (context, state) {},
         builder: (context, state) {
+          TransactionsCubit cubb = TransactionsCubit.get(context);
           return Scaffold(
             appBar: AppBar(
               title: const Padding(
@@ -51,9 +36,10 @@ class TransactionsScreen extends StatelessWidget {
                   const SizedBox(
                     height: 30,
                   ),
-                  const Text(
-                    'EGP 3,250',
-                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 40),
+                  Text(
+                    'EGP ${cubb.balance}',
+                    style: const TextStyle(
+                        fontWeight: FontWeight.bold, fontSize: 40),
                   ),
                   const SizedBox(
                     height: 5,
@@ -83,9 +69,8 @@ class TransactionsScreen extends StatelessWidget {
                                           MainAxisAlignment.center,
                                       children: [
                                         TextField(
-                                            controller:
-                                                TransactionsCubit.get(context)
-                                                    .add_controller1,
+                                            // controller: TransactionsCubit.get(context)
+                                            //     .add_controller1,
                                             style:
                                                 const TextStyle(fontSize: 25),
                                             decoration: InputDecoration(
@@ -108,9 +93,8 @@ class TransactionsScreen extends StatelessWidget {
                                           height: 30,
                                         ),
                                         TextFormField(
-                                          controller:
-                                              TransactionsCubit.get(context)
-                                                  .add_controller2,
+                                          // controller: TransactionsCubit.get(context)
+                                          //     .add_controller2,
                                           style: const TextStyle(fontSize: 25),
                                           decoration: InputDecoration(
                                               border: OutlineInputBorder(
@@ -131,6 +115,19 @@ class TransactionsScreen extends StatelessWidget {
                                         ),
                                         TextButton(
                                           onPressed: () {
+                                            cubb.CreateTransaction(
+                                                income: true,
+                                                title:
+                                                    cubb.add_controller1.text,
+                                                date: 'date',
+                                                amount: double.parse(
+                                                    cubb.add_controller2.text));
+                                            cubb.updateBalance(double.parse(
+                                                cubb.add_controller2.text));
+                                            cubb.getData();
+                                            cubb.add_controller1.clear();
+                                            cubb.add_controller2.clear();
+
                                             Navigator.pop(context);
                                           },
                                           child: const Text(
@@ -159,7 +156,89 @@ class TransactionsScreen extends StatelessWidget {
                         ),
                         InkWell(
                           borderRadius: BorderRadius.circular(30),
-                          onTap: () {},
+                          onTap: () {
+                            showModalBottomSheet(
+                                context: context,
+                                builder: (context1) {
+                                  return Padding(
+                                    padding: const EdgeInsets.all(20.0),
+                                    child: Column(
+                                      mainAxisSize: MainAxisSize.max,
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      children: [
+                                        TextField(
+                                            controller: cubb.add_controller1,
+                                            style:
+                                                const TextStyle(fontSize: 25),
+                                            decoration: InputDecoration(
+                                              labelText: 'Transaction',
+                                              border: OutlineInputBorder(
+                                                borderRadius:
+                                                    BorderRadius.circular(30),
+                                              ),
+                                              suffixIcon: const Padding(
+                                                padding:
+                                                    EdgeInsetsDirectional.all(
+                                                        10.0),
+                                                child: Icon(
+                                                  Icons.account_circle,
+                                                  size: 35,
+                                                ),
+                                              ),
+                                            )),
+                                        const SizedBox(
+                                          height: 30,
+                                        ),
+                                        TextFormField(
+                                          controller: cubb.add_controller2,
+                                          style: const TextStyle(fontSize: 25),
+                                          decoration: InputDecoration(
+                                              border: OutlineInputBorder(
+                                                borderRadius:
+                                                    BorderRadius.circular(30),
+                                              ),
+                                              suffixIcon: const Padding(
+                                                padding: EdgeInsets.all(10.0),
+                                                child: Icon(
+                                                  Icons.money,
+                                                  size: 35,
+                                                ),
+                                              ),
+                                              labelText: 'amount'),
+                                        ),
+                                        const SizedBox(
+                                          height: 70,
+                                        ),
+                                        TextButton(
+                                          onPressed: () {
+                                            cubb.CreateTransaction(
+                                                income: false,
+                                                title:
+                                                    cubb.add_controller1.text,
+                                                date: 'date',
+                                                amount: double.parse(
+                                                    cubb.add_controller2.text));
+                                            cubb.updateBalance(-double.parse(
+                                                cubb.add_controller2.text));
+                                            cubb.getData();
+
+                                            Navigator.pop(context);
+                                            cubb.add_controller1.clear();
+                                            cubb.add_controller2.clear();
+                                          },
+                                          child: const Text(
+                                            'send',
+                                            style: TextStyle(
+                                                fontSize: 30,
+                                                fontWeight: FontWeight.bold),
+                                          ),
+                                        )
+                                      ],
+                                    ),
+                                  );
+                                });
+                          },
                           child: CircleAvatar(
                             minRadius: 30,
                             backgroundColor: Colors.blue[70],
@@ -173,15 +252,16 @@ class TransactionsScreen extends StatelessWidget {
                     ),
                   ),
                   const SizedBox(
-                    height: 50,
+                    height: 80,
                   ),
                   Expanded(
                     child: ListView.separated(
-                      itemBuilder: (context, index) => builditem(models[index]),
+                      itemBuilder: (context, index) =>
+                          builditem(cubb.models[index]),
                       separatorBuilder: (context, index) => const SizedBox(
                         height: 20,
                       ),
-                      itemCount: models.length,
+                      itemCount: cubb.models.length,
                     ),
                   ),
                 ],
@@ -196,13 +276,13 @@ class TransactionsScreen extends StatelessWidget {
   Widget builditem(DataModel model) {
     return Row(
       children: [
-        const Padding(
-          padding: EdgeInsets.only(bottom: 10),
+        Padding(
+          padding: const EdgeInsets.only(bottom: 10),
           child: CircleAvatar(
             radius: 25,
             child: Icon(
-              Icons.arrow_upward,
-              size: 25,
+              model.income! ? Icons.arrow_upward : Icons.arrow_downward,
+              color: model.income! ? Colors.green : Colors.red,
             ),
           ),
         ),
