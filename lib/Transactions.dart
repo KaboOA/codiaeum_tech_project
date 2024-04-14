@@ -27,161 +27,168 @@ class TransactionsScreen extends StatelessWidget {
         date: 'Date is here',
         title: 'Transaction is Written here'));
 
-    // return BlocProvider(
-    //   create: (context) => TransactionsCubit.get(context),
-    //   child: BlocConsumer<TransactionsCubit, TransactionsStates>(
-    //     listener: (context, state) {},
-    //     builder: (context, state) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Padding(
-          padding: EdgeInsetsDirectional.all(25),
-          child: Text(
-            'Home',
-            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 25),
-          ),
-        ),
-      ),
-      body: Padding(
-        padding: const EdgeInsetsDirectional.only(start: 40),
-        child: Column(
-          mainAxisSize: MainAxisSize.max,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            const SizedBox(
-              height: 30,
+    return BlocProvider(
+      create: (context) => TransactionsCubit(),
+      child: BlocConsumer<TransactionsCubit, TransactionsStates>(
+        listener: (context, state) {},
+        builder: (context, state) {
+          return Scaffold(
+            appBar: AppBar(
+              title: const Padding(
+                padding: EdgeInsetsDirectional.all(25),
+                child: Text(
+                  'Home',
+                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 25),
+                ),
+              ),
             ),
-            const Text(
-              'EGP 3,250',
-              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 40),
-            ),
-            const SizedBox(
-              height: 5,
-            ),
-            const Text(
-              'Current balance ',
-              style: TextStyle(fontSize: 20, color: Colors.grey),
-            ),
-            const SizedBox(
-              height: 50,
-            ),
-            Padding(
-              padding: const EdgeInsetsDirectional.only(start: 40.0),
-              child: Row(
+            body: Padding(
+              padding: const EdgeInsetsDirectional.only(start: 40),
+              child: Column(
+                mainAxisSize: MainAxisSize.max,
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  InkWell(
-                    borderRadius: BorderRadius.circular(30),
-                    onTap: () {
-                      showModalBottomSheet(
-                          context: context,
-                          builder: (context) {
-                            return Padding(
-                              padding: const EdgeInsets.all(20.0),
-                              child: Column(
-                                  mainAxisSize: MainAxisSize.max,
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    const TextField(
-                                        // controller: TransactionsCubit.get(context)
-                                        //     .add_controller1,
-                                        style: TextStyle(fontSize: 25),
-                                        decoration: InputDecoration(
-                                          labelText: 'Transaction',
-                                          border: OutlineInputBorder(
-                                              borderRadius: BorderRadius.all(
-                                                  Radius.circular(30))),
-                                          suffixIcon: Padding(
-                                            padding:
-                                                EdgeInsetsDirectional.all(10.0),
-                                            child: Icon(
-                                              Icons.account_circle,
-                                              size: 35,
-                                            ),
+                  const SizedBox(
+                    height: 30,
+                  ),
+                  const Text(
+                    'EGP 3,250',
+                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 40),
+                  ),
+                  const SizedBox(
+                    height: 5,
+                  ),
+                  const Text(
+                    'Current balance ',
+                    style: TextStyle(fontSize: 20, color: Colors.grey),
+                  ),
+                  const SizedBox(
+                    height: 50,
+                  ),
+                  Padding(
+                    padding: const EdgeInsetsDirectional.only(start: 40.0),
+                    child: Row(
+                      children: [
+                        InkWell(
+                          borderRadius: BorderRadius.circular(30),
+                          onTap: () {
+                            showModalBottomSheet(
+                                context: context,
+                                builder: (context) {
+                                  return Padding(
+                                    padding: const EdgeInsets.all(20.0),
+                                    child: Column(
+                                        mainAxisSize: MainAxisSize.max,
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.center,
+                                        children: [
+                                          const TextField(
+                                              // controller: TransactionsCubit.get(context)
+                                              //     .add_controller1,
+                                              style: TextStyle(fontSize: 25),
+                                              decoration: InputDecoration(
+                                                labelText: 'Transaction',
+                                                border: OutlineInputBorder(
+                                                    borderRadius:
+                                                        BorderRadius.all(
+                                                            Radius.circular(
+                                                                30))),
+                                                suffixIcon: Padding(
+                                                  padding:
+                                                      EdgeInsetsDirectional.all(
+                                                          10.0),
+                                                  child: Icon(
+                                                    Icons.account_circle,
+                                                    size: 35,
+                                                  ),
+                                                ),
+                                              )),
+                                          const SizedBox(
+                                            height: 30,
                                           ),
-                                        )),
-                                    const SizedBox(
-                                      height: 30,
-                                    ),
-                                    TextFormField(
-                                      // controller: TransactionsCubit.get(context)
-                                      //     .add_controller2,
-                                      style: const TextStyle(fontSize: 25),
-                                      decoration: const InputDecoration(
-                                          border: OutlineInputBorder(
-                                              borderRadius: BorderRadius.all(
-                                                  Radius.circular(30))),
-                                          suffixIcon: Padding(
-                                            padding: EdgeInsets.all(10.0),
-                                            child: Icon(
-                                              Icons.money,
-                                              size: 35,
-                                            ),
+                                          TextFormField(
+                                            // controller: TransactionsCubit.get(context)
+                                            //     .add_controller2,
+                                            style:
+                                                const TextStyle(fontSize: 25),
+                                            decoration: const InputDecoration(
+                                                border: OutlineInputBorder(
+                                                    borderRadius:
+                                                        BorderRadius.all(
+                                                            Radius.circular(
+                                                                30))),
+                                                suffixIcon: Padding(
+                                                  padding: EdgeInsets.all(10.0),
+                                                  child: Icon(
+                                                    Icons.money,
+                                                    size: 35,
+                                                  ),
+                                                ),
+                                                labelText: 'amount'),
                                           ),
-                                          labelText: 'amount'),
-                                    ),
-                                    const SizedBox(
-                                      height: 70,
-                                    ),
-                                    TextButton(
-                                      onPressed: () {
-                                        Navigator.pop(context);
-                                      },
-                                      child: const Text(
-                                        'send',
-                                        style: TextStyle(
-                                            fontSize: 30,
-                                            fontWeight: FontWeight.bold),
-                                      ),
-                                    )
-                                  ]),
-                            );
-                          });
-                    },
-                    child: CircleAvatar(
-                      minRadius: 30,
-                      backgroundColor: Colors.blue[70],
-                      child: const Icon(
-                        Icons.add,
-                        color: Colors.blue,
-                      ),
+                                          const SizedBox(
+                                            height: 70,
+                                          ),
+                                          TextButton(
+                                            onPressed: () {
+                                              Navigator.pop(context);
+                                            },
+                                            child: const Text(
+                                              'send',
+                                              style: TextStyle(
+                                                  fontSize: 30,
+                                                  fontWeight: FontWeight.bold),
+                                            ),
+                                          )
+                                        ]),
+                                  );
+                                });
+                          },
+                          child: CircleAvatar(
+                            minRadius: 30,
+                            backgroundColor: Colors.blue[70],
+                            child: const Icon(
+                              Icons.add,
+                              color: Colors.blue,
+                            ),
+                          ),
+                        ),
+                        const SizedBox(
+                          width: 30,
+                        ),
+                        InkWell(
+                          borderRadius: BorderRadius.circular(30),
+                          onTap: () {},
+                          child: CircleAvatar(
+                            minRadius: 30,
+                            backgroundColor: Colors.blue[70],
+                            child: const Icon(
+                              Icons.send,
+                              color: Colors.blue,
+                            ),
+                          ),
+                        ),
+                      ],
                     ),
                   ),
                   const SizedBox(
-                    width: 30,
+                    height: 50,
                   ),
-                  InkWell(
-                    borderRadius: BorderRadius.circular(30),
-                    onTap: () {},
-                    child: CircleAvatar(
-                      minRadius: 30,
-                      backgroundColor: Colors.blue[70],
-                      child: const Icon(
-                        Icons.send,
-                        color: Colors.blue,
-                      ),
+                  Expanded(
+                      child: ListView.separated(
+                    itemBuilder: (context, index) => builditem(models[index]),
+                    separatorBuilder: (context, index) => const SizedBox(
+                      height: 20,
                     ),
-                  ),
+                    itemCount: models.length,
+                  ))
                 ],
               ),
             ),
-            const SizedBox(
-              height: 50,
-            ),
-            Expanded(
-                child: ListView.separated(
-              itemBuilder: (context, index) => builditem(models[index]),
-              separatorBuilder: (context, index) => const SizedBox(
-                height: 20,
-              ),
-              itemCount: models.length,
-            ))
-          ],
-        ),
+          );
+        },
       ),
     );
-    //     },
-    //   ),
-    // );
   }
 
   Widget builditem(DataModel model) {
