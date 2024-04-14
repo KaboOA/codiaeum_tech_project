@@ -9,29 +9,30 @@ class TransactionsScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    List<DataModel> models = [];
-    models.add(DataModel(
-        amount: 600,
-        date: 'Date is here ',
-        title: 'Transaction is Written here'));
-    models.add(DataModel(
-        amount: 300,
-        date: 'Date is here',
-        title: 'Transaction is Written here'));
-    models.add(DataModel(
-        amount: 400,
-        date: 'Date is here',
-        title: 'Transaction is Written here'));
-    models.add(DataModel(
-        amount: 500,
-        date: 'Date is here',
-        title: 'Transaction is Written here'));
+    // List<DataModel> models = [];
+    // models.add(DataModel(
+    //     amount: 600,
+    //     date: 'Date is here ',
+    //     title: 'Transaction is Written here'));
+    // models.add(DataModel(
+    //     amount: 300,
+    //     date: 'Date is here',
+    //     title: 'Transaction is Written here'));
+    // models.add(DataModel(
+    //     amount: 400,
+    //     date: 'Date is here',
+    //     title: 'Transaction is Written here'));
+    // models.add(DataModel(
+    //     amount: 500,
+    //     date: 'Date is here',
+    //     title: 'Transaction is Written here'));
 
     return BlocProvider(
-      create: (context) => TransactionsCubit(),
+      create: (context) => TransactionsCubit()..getData(),
       child: BlocConsumer<TransactionsCubit, TransactionsStates>(
         listener: (context, state) {},
         builder: (context, state) {
+          TransactionsCubit cubb = TransactionsCubit.get(context);
           return Scaffold(
             appBar: AppBar(
               title: const Padding(
@@ -74,7 +75,7 @@ class TransactionsScreen extends StatelessWidget {
                           onTap: () {
                             showModalBottomSheet(
                                 context: context,
-                                builder: (context) {
+                                builder: (context1) {
                                   return Padding(
                                     padding: const EdgeInsets.all(20.0),
                                     child: Column(
@@ -83,8 +84,7 @@ class TransactionsScreen extends StatelessWidget {
                                           MainAxisAlignment.center,
                                       children: [
                                         TextField(
-                                            // controller: TransactionsCubit.get(context)
-                                            //     .add_controller1,
+                                            controller: cubb.add_controller1,
                                             style:
                                                 const TextStyle(fontSize: 25),
                                             decoration: InputDecoration(
@@ -107,8 +107,7 @@ class TransactionsScreen extends StatelessWidget {
                                           height: 30,
                                         ),
                                         TextFormField(
-                                          // controller: TransactionsCubit.get(context)
-                                          //     .add_controller2,
+                                          controller: cubb.add_controller2,
                                           style: const TextStyle(fontSize: 25),
                                           decoration: InputDecoration(
                                               border: OutlineInputBorder(
@@ -171,15 +170,16 @@ class TransactionsScreen extends StatelessWidget {
                     ),
                   ),
                   const SizedBox(
-                    height: 50,
+                    height: 80,
                   ),
                   Expanded(
                     child: ListView.separated(
-                      itemBuilder: (context, index) => builditem(models[index]),
+                      itemBuilder: (context, index) =>
+                          builditem(cubb.models[index]),
                       separatorBuilder: (context, index) => const SizedBox(
                         height: 20,
                       ),
-                      itemCount: models.length,
+                      itemCount: cubb.models.length,
                     ),
                   ),
                 ],

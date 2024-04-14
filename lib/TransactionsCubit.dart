@@ -1,3 +1,5 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:codiaeum_tech_project/DataModel.dart';
 import 'package:codiaeum_tech_project/TransactionsStates.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -11,7 +13,7 @@ class TransactionsCubit extends Cubit<TransactionsStates> {
 
   TextEditingController add_controller1 = TextEditingController();
   TextEditingController add_controller2 = TextEditingController();
-
+  List<DataModel> models = [];
 //   void CreateTransaction(
 //       {required String title, required String date, required amount}) {
 //     DataModel model = DataModel(amount: amount, date: date, title: title);
@@ -23,12 +25,17 @@ class TransactionsCubit extends Cubit<TransactionsStates> {
 //       emit(CreateTransactionState());
 //     }).catchError((error) {});
 //   }
-//   List<DataModel> getData ()
-//   {
-//     List<DataModel> models =[];
-// FirebaseFirestore.instance
-//         .collection('Transactions')
-//         .doc('transaction').get(Element){};
-//     return models;
-//   }
+
+  void getData() {
+    emit(GetLoadingTransactionState());
+    FirebaseFirestore.instance.collection('Transactions').get().then((value) {
+      for (var element in value.docs) {
+        models.add(DataModel.fromJson(element.data()));
+      }
+      debugPrint('wahba${models[0].title}');
+      emit(GetSuccessTransactionState());
+    }).catchError((error) {
+      emit(GetFailedTransactionState());
+    });
+  }
 }
