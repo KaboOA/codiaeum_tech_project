@@ -78,69 +78,68 @@ class TransactionsScreen extends StatelessWidget {
                                   return Padding(
                                     padding: const EdgeInsets.all(20.0),
                                     child: Column(
-                                        mainAxisSize: MainAxisSize.max,
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.center,
-                                        children: [
-                                          const TextField(
-                                              // controller: TransactionsCubit.get(context)
-                                              //     .add_controller1,
-                                              style: TextStyle(fontSize: 25),
-                                              decoration: InputDecoration(
-                                                labelText: 'Transaction',
-                                                border: OutlineInputBorder(
-                                                    borderRadius:
-                                                        BorderRadius.all(
-                                                            Radius.circular(
-                                                                30))),
-                                                suffixIcon: Padding(
-                                                  padding:
-                                                      EdgeInsetsDirectional.all(
-                                                          10.0),
-                                                  child: Icon(
-                                                    Icons.account_circle,
-                                                    size: 35,
-                                                  ),
-                                                ),
-                                              )),
-                                          const SizedBox(
-                                            height: 30,
-                                          ),
-                                          TextFormField(
+                                      mainAxisSize: MainAxisSize.max,
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      children: [
+                                        TextField(
                                             // controller: TransactionsCubit.get(context)
-                                            //     .add_controller2,
+                                            //     .add_controller1,
                                             style:
                                                 const TextStyle(fontSize: 25),
-                                            decoration: const InputDecoration(
-                                                border: OutlineInputBorder(
-                                                    borderRadius:
-                                                        BorderRadius.all(
-                                                            Radius.circular(
-                                                                30))),
-                                                suffixIcon: Padding(
-                                                  padding: EdgeInsets.all(10.0),
-                                                  child: Icon(
-                                                    Icons.money,
-                                                    size: 35,
-                                                  ),
+                                            decoration: InputDecoration(
+                                              labelText: 'Transaction',
+                                              border: OutlineInputBorder(
+                                                borderRadius:
+                                                    BorderRadius.circular(30),
+                                              ),
+                                              suffixIcon: const Padding(
+                                                padding:
+                                                    EdgeInsetsDirectional.all(
+                                                        10.0),
+                                                child: Icon(
+                                                  Icons.account_circle,
+                                                  size: 35,
                                                 ),
-                                                labelText: 'amount'),
+                                              ),
+                                            )),
+                                        const SizedBox(
+                                          height: 30,
+                                        ),
+                                        TextFormField(
+                                          // controller: TransactionsCubit.get(context)
+                                          //     .add_controller2,
+                                          style: const TextStyle(fontSize: 25),
+                                          decoration: InputDecoration(
+                                              border: OutlineInputBorder(
+                                                borderRadius:
+                                                    BorderRadius.circular(30),
+                                              ),
+                                              suffixIcon: const Padding(
+                                                padding: EdgeInsets.all(10.0),
+                                                child: Icon(
+                                                  Icons.money,
+                                                  size: 35,
+                                                ),
+                                              ),
+                                              labelText: 'amount'),
+                                        ),
+                                        const SizedBox(
+                                          height: 70,
+                                        ),
+                                        TextButton(
+                                          onPressed: () {
+                                            Navigator.pop(context);
+                                          },
+                                          child: const Text(
+                                            'send',
+                                            style: TextStyle(
+                                                fontSize: 30,
+                                                fontWeight: FontWeight.bold),
                                           ),
-                                          const SizedBox(
-                                            height: 70,
-                                          ),
-                                          TextButton(
-                                            onPressed: () {
-                                              Navigator.pop(context);
-                                            },
-                                            child: const Text(
-                                              'send',
-                                              style: TextStyle(
-                                                  fontSize: 30,
-                                                  fontWeight: FontWeight.bold),
-                                            ),
-                                          )
-                                        ]),
+                                        )
+                                      ],
+                                    ),
                                   );
                                 });
                           },
@@ -175,13 +174,14 @@ class TransactionsScreen extends StatelessWidget {
                     height: 50,
                   ),
                   Expanded(
-                      child: ListView.separated(
-                    itemBuilder: (context, index) => builditem(models[index]),
-                    separatorBuilder: (context, index) => const SizedBox(
-                      height: 20,
+                    child: ListView.separated(
+                      itemBuilder: (context, index) => builditem(models[index]),
+                      separatorBuilder: (context, index) => const SizedBox(
+                        height: 20,
+                      ),
+                      itemCount: models.length,
                     ),
-                    itemCount: models.length,
-                  ))
+                  ),
                 ],
               ),
             ),
