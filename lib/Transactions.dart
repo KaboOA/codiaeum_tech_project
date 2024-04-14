@@ -74,7 +74,7 @@ class TransactionsScreen extends StatelessWidget {
                           onTap: () {
                             showModalBottomSheet(
                                 context: context,
-                                builder: (context) {
+                                builder: (context1) {
                                   return Padding(
                                     padding: const EdgeInsets.all(20.0),
                                     child: Column(
@@ -83,8 +83,9 @@ class TransactionsScreen extends StatelessWidget {
                                           MainAxisAlignment.center,
                                       children: [
                                         TextField(
-                                            // controller: TransactionsCubit.get(context)
-                                            //     .add_controller1,
+                                            controller:
+                                                TransactionsCubit.get(context)
+                                                    .add_controller1,
                                             style:
                                                 const TextStyle(fontSize: 25),
                                             decoration: InputDecoration(
@@ -107,8 +108,9 @@ class TransactionsScreen extends StatelessWidget {
                                           height: 30,
                                         ),
                                         TextFormField(
-                                          // controller: TransactionsCubit.get(context)
-                                          //     .add_controller2,
+                                          controller:
+                                              TransactionsCubit.get(context)
+                                                  .add_controller2,
                                           style: const TextStyle(fontSize: 25),
                                           decoration: InputDecoration(
                                               border: OutlineInputBorder(
