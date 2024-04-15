@@ -2,6 +2,7 @@ import 'package:codiaeum_tech_project/DataModel.dart';
 import 'package:codiaeum_tech_project/TransactionsCubit.dart';
 import 'package:codiaeum_tech_project/TransactionsStates.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class TransactionsScreen extends StatelessWidget {
@@ -69,8 +70,7 @@ class TransactionsScreen extends StatelessWidget {
                                           MainAxisAlignment.center,
                                       children: [
                                         TextField(
-                                            // controller: TransactionsCubit.get(context)
-                                            //     .add_controller1,
+                                            controller: cubb.add_controller1,
                                             style:
                                                 const TextStyle(fontSize: 25),
                                             decoration: InputDecoration(
@@ -93,8 +93,7 @@ class TransactionsScreen extends StatelessWidget {
                                           height: 30,
                                         ),
                                         TextFormField(
-                                          // controller: TransactionsCubit.get(context)
-                                          //     .add_controller2,
+                                          controller: cubb.add_controller2,
                                           style: const TextStyle(fontSize: 25),
                                           decoration: InputDecoration(
                                               border: OutlineInputBorder(
@@ -167,26 +166,50 @@ class TransactionsScreen extends StatelessWidget {
                                       mainAxisAlignment:
                                           MainAxisAlignment.center,
                                       children: [
-                                        TextField(
-                                            controller: cubb.add_controller1,
-                                            style:
-                                                const TextStyle(fontSize: 25),
-                                            decoration: InputDecoration(
-                                              labelText: 'Transaction',
-                                              border: OutlineInputBorder(
-                                                borderRadius:
-                                                    BorderRadius.circular(30),
-                                              ),
-                                              suffixIcon: const Padding(
-                                                padding:
-                                                    EdgeInsetsDirectional.all(
-                                                        10.0),
-                                                child: Icon(
-                                                  Icons.account_circle,
-                                                  size: 35,
-                                                ),
-                                              ),
-                                            )),
+                                        DropdownButton<String>(
+                                          // Define the dropdown button
+                                          value: cubb
+                                              .SelectedItem, // Set the value to the selected item
+                                          onChanged: (String? newValue) {
+                                            // Update the selected item when an item is selected
+
+                                            print(
+                                                'Selected: ${cubb.SelectedItem}');
+                                          },
+                                          items: cubb.items
+                                              .map<DropdownMenuItem<String>>(
+                                                  (String value) {
+                                            // Create dropdown menu items from the list of items
+                                            return DropdownMenuItem<String>(
+                                              value: value,
+                                              child: Text(value),
+                                            );
+                                          }).toList(),
+                                        ),
+                                        const SizedBox(
+                                          height: 50,
+                                        ),
+                                        // TextField(
+                                        //     controller: cubb.add_controller1,
+                                        //     style:
+                                        //         const TextStyle(fontSize: 25),
+                                        //     decoration: InputDecoration(
+                                        //       labelText: 'Transaction',
+                                        //       border: OutlineInputBorder(
+                                        //         borderRadius:
+                                        //             BorderRadius.circular(30),
+                                        //       ),
+                                        //       suffixIcon: const Padding(
+                                        //         padding:
+                                        //             EdgeInsetsDirectional.all(
+                                        //                 10.0),
+                                        //         child: Icon(
+                                        //           Icons.account_circle,
+                                        //           size: 35,
+                                        //         ),
+                                        //       ),
+                                        //     )),
+
                                         const SizedBox(
                                           height: 30,
                                         ),
@@ -207,6 +230,7 @@ class TransactionsScreen extends StatelessWidget {
                                               ),
                                               labelText: 'amount'),
                                         ),
+
                                         const SizedBox(
                                           height: 70,
                                         ),
@@ -214,8 +238,7 @@ class TransactionsScreen extends StatelessWidget {
                                           onPressed: () {
                                             cubb.CreateTransaction(
                                                 income: false,
-                                                title:
-                                                    cubb.add_controller1.text,
+                                                title: cubb.SelectedItem,
                                                 date: 'date',
                                                 amount: double.parse(
                                                     cubb.add_controller2.text));
@@ -274,51 +297,54 @@ class TransactionsScreen extends StatelessWidget {
   }
 
   Widget builditem(DataModel model) {
-    return Row(
-      children: [
-        Padding(
-          padding: const EdgeInsets.only(bottom: 10),
-          child: CircleAvatar(
-            radius: 25,
-            child: Icon(
-              model.income! ? Icons.arrow_upward : Icons.arrow_downward,
-              color: model.income! ? Colors.green : Colors.red,
+    return SizedBox(
+      width: double.infinity,
+      child: Row(
+        children: [
+          Padding(
+            padding: const EdgeInsets.only(bottom: 10),
+            child: CircleAvatar(
+              radius: 25,
+              child: Icon(
+                model.income! ? Icons.arrow_upward : Icons.arrow_downward,
+                color: model.income! ? Colors.green : Colors.red,
+              ),
             ),
           ),
-        ),
-        const SizedBox(
-          width: 20,
-        ),
-        Expanded(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                '${model.title}',
-                maxLines: 3,
-                style: const TextStyle(fontSize: 20),
-              ),
-              const SizedBox(
-                height: 5,
-              ),
-              Text(
-                '${model.date}',
-                style: const TextStyle(color: Colors.grey),
-              )
-            ],
+          const SizedBox(
+            width: 20,
           ),
-        ),
-        const SizedBox(
-          width: 10,
-        ),
-        Padding(
-          padding: const EdgeInsetsDirectional.only(end: 20),
-          child: Text(
-            'EGP ${model.amount}',
-            style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  '${model.title}',
+                  maxLines: 3,
+                  style: const TextStyle(fontSize: 20),
+                ),
+                const SizedBox(
+                  height: 5,
+                ),
+                Text(
+                  '${model.date}',
+                  style: const TextStyle(color: Colors.grey),
+                )
+              ],
+            ),
           ),
-        ),
-      ],
+          const SizedBox(
+            width: 10,
+          ),
+          Padding(
+            padding: const EdgeInsetsDirectional.only(end: 20),
+            child: Text(
+              'EGP ${model.amount}',
+              style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
+            ),
+          ),
+        ],
+      ),
     );
   }
 }
