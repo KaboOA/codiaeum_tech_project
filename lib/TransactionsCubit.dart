@@ -13,8 +13,10 @@ class TransactionsCubit extends Cubit<TransactionsStates> {
 
   // add controllers
 
-  TextEditingController add_controller1 = TextEditingController();
-  TextEditingController add_controller2 = TextEditingController();
+  TextEditingController titleController = TextEditingController();
+  TextEditingController dateController = TextEditingController();
+  TextEditingController amountController = TextEditingController();
+
   List<DataModel> models = [];
   final List<String> items = ['Kabary', 'Daboor', 'Wahba'];
   int currentIndex = 0;
