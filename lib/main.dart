@@ -16,9 +16,9 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
+    return MaterialApp(
       debugShowCheckedModeBanner: false,
-      locale: Locale('ar'),
+      locale: const Locale('ar'),
       themeMode: ThemeMode.light,
       home: TransactionsScreen(),
     );

@@ -11,8 +11,10 @@ class TransactionsCubit extends Cubit<TransactionsStates> {
 
   // add controllers
 
-  TextEditingController add_controller1 = TextEditingController();
-  TextEditingController add_controller2 = TextEditingController();
+  TextEditingController titleController = TextEditingController();
+  TextEditingController dateController = TextEditingController();
+  TextEditingController amountController = TextEditingController();
+
   List<DataModel> models = [];
   double balance = 0;
   void CreateTransaction(

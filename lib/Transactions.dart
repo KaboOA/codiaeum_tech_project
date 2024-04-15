@@ -1,11 +1,15 @@
+// ignore_for_file: must_be_immutable
+
 import 'package:codiaeum_tech_project/DataModel.dart';
 import 'package:codiaeum_tech_project/TransactionsCubit.dart';
 import 'package:codiaeum_tech_project/TransactionsStates.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:intl/intl.dart';
 
 class TransactionsScreen extends StatelessWidget {
-  const TransactionsScreen({super.key});
+  TransactionsScreen({super.key});
+  GlobalKey<FormState> formKey = GlobalKey();
 
   @override
   Widget build(BuildContext context) {
@@ -59,8 +63,95 @@ class TransactionsScreen extends StatelessWidget {
                           borderRadius: BorderRadius.circular(30),
                           onTap: () {
                             showModalBottomSheet(
-                                context: context,
-                                builder: (context1) {
+                              context: context,
+                              builder: (context1) {
+                                return Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: Form(
+                                    key: formKey,
+                                    child: Column(
+                                      mainAxisSize: MainAxisSize.min,
+                                      children: [
+                                        const Text(
+                                          'Add Todo',
+                                          textAlign: TextAlign.center,
+                                          style: TextStyle(
+                                            fontSize: 18.0,
+                                            fontWeight: FontWeight.bold,
+                                          ),
+                                        ),
+                                        const SizedBox(
+                                          height: 8.0,
+                                        ),
+                                        defaultTextFormField(
+                                          controller: cubb.titleController,
+                                          hint: 'Title',
+                                        ),
+                                        const SizedBox(
+                                          height: 8.0,
+                                        ),
+                                        defaultTextFormField(
+                                          controller: cubb.amountController,
+                                          hint: 'Amount',
+                                          keyboardType: TextInputType.number,
+                                        ),
+                                        const SizedBox(
+                                          height: 8.0,
+                                        ),
+                                        defaultTextFormField(
+                                          controller: cubb.dateController,
+                                          hint: 'Date',
+                                          onTap: () async {
+                                            final date = await showDatePicker(
+                                              context: context,
+                                              initialDate: DateTime.now(),
+                                              firstDate: DateTime.now(),
+                                              lastDate: DateTime(2200),
+                                              currentDate: DateTime.now(),
+                                            );
+                                            if (date != null) {
+                                              cubb.dateController.text =
+                                                  DateFormat('dd-MM-yyyy')
+                                                      .format(date);
+                                            }
+                                          },
+                                        ),
+                                        TextButton(
+                                          onPressed: () {
+                                            if (formKey.currentState!
+                                                .validate()) {
+                                              cubb.CreateTransaction(
+                                                  income: true,
+                                                  title:
+                                                      cubb.titleController.text,
+                                                  date: 'date',
+                                                  amount: double.parse(cubb
+                                                      .amountController.text));
+                                              cubb.updateBalance(double.parse(
+                                                  cubb.amountController.text));
+                                              cubb.getData();
+                                              cubb.titleController.clear();
+                                              cubb.amountController.clear();
+                                              cubb.dateController.clear();
+
+                                              Navigator.pop(context);
+                                            }
+                                          },
+                                          child: const Text(
+                                            'send',
+                                            style: TextStyle(
+                                                fontSize: 30,
+                                                fontWeight: FontWeight.bold),
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                );
+                              },
+                            );
+
+                            /*
                                   return Padding(
                                     padding: const EdgeInsets.all(20.0),
                                     child: Column(
@@ -140,7 +231,9 @@ class TransactionsScreen extends StatelessWidget {
                                       ],
                                     ),
                                   );
+                                  
                                 });
+                                */
                           },
                           child: CircleAvatar(
                             minRadius: 30,
@@ -158,8 +251,95 @@ class TransactionsScreen extends StatelessWidget {
                           borderRadius: BorderRadius.circular(30),
                           onTap: () {
                             showModalBottomSheet(
-                                context: context,
-                                builder: (context1) {
+                              context: context,
+                              builder: (context1) {
+                                return Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: Form(
+                                    key: formKey,
+                                    child: Column(
+                                      mainAxisSize: MainAxisSize.min,
+                                      children: [
+                                        const Text(
+                                          'Add Todo',
+                                          textAlign: TextAlign.center,
+                                          style: TextStyle(
+                                            fontSize: 18.0,
+                                            fontWeight: FontWeight.bold,
+                                          ),
+                                        ),
+                                        const SizedBox(
+                                          height: 8.0,
+                                        ),
+                                        defaultTextFormField(
+                                          controller: cubb.titleController,
+                                          hint: 'Title',
+                                        ),
+                                        const SizedBox(
+                                          height: 8.0,
+                                        ),
+                                        defaultTextFormField(
+                                          controller: cubb.amountController,
+                                          hint: 'Amount',
+                                          keyboardType: TextInputType.number,
+                                        ),
+                                        const SizedBox(
+                                          height: 8.0,
+                                        ),
+                                        defaultTextFormField(
+                                          controller: cubb.dateController,
+                                          hint: 'Date',
+                                          onTap: () async {
+                                            final date = await showDatePicker(
+                                              context: context,
+                                              initialDate: DateTime.now(),
+                                              firstDate: DateTime.now(),
+                                              lastDate: DateTime(2200),
+                                              currentDate: DateTime.now(),
+                                            );
+                                            if (date != null) {
+                                              cubb.dateController.text =
+                                                  DateFormat('dd-MM-yyyy')
+                                                      .format(date);
+                                            }
+                                          },
+                                        ),
+                                        TextButton(
+                                          onPressed: () {
+                                            if (formKey.currentState!
+                                                .validate()) {
+                                              cubb.CreateTransaction(
+                                                  income: false,
+                                                  title:
+                                                      cubb.titleController.text,
+                                                  date: 'date',
+                                                  amount: double.parse(cubb
+                                                      .amountController.text));
+                                              cubb.updateBalance(-double.parse(
+                                                  cubb.amountController.text));
+                                              cubb.getData();
+
+                                              Navigator.pop(context);
+                                              cubb.titleController.clear();
+                                              cubb.dateController.clear();
+                                              cubb.amountController.clear();
+                                            }
+                                          },
+                                          child: const Text(
+                                            'send',
+                                            style: TextStyle(
+                                                fontSize: 30,
+                                                fontWeight: FontWeight.bold),
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                );
+                              },
+                            );
+
+                            /*
                                   return Padding(
                                     padding: const EdgeInsets.all(20.0),
                                     child: Column(
@@ -215,17 +395,19 @@ class TransactionsScreen extends StatelessWidget {
                                             cubb.CreateTransaction(
                                                 income: false,
                                                 title:
-                                                    cubb.add_controller1.text,
+                                                    cubb.titleController.text,
                                                 date: 'date',
                                                 amount: double.parse(
-                                                    cubb.add_controller2.text));
+                                                    cubb.amountController.text));
                                             cubb.updateBalance(-double.parse(
-                                                cubb.add_controller2.text));
+                                                cubb.amountController.text));
                                             cubb.getData();
 
                                             Navigator.pop(context);
-                                            cubb.add_controller1.clear();
-                                            cubb.add_controller2.clear();
+                                            cubb.titleController.clear();
+                                            cubb.dateController.clear();
+                                            cubb.amountController.clear();
+
                                           },
                                           child: const Text(
                                             'send',
@@ -238,6 +420,7 @@ class TransactionsScreen extends StatelessWidget {
                                     ),
                                   );
                                 });
+                                */
                           },
                           child: CircleAvatar(
                             minRadius: 30,
@@ -319,6 +502,29 @@ class TransactionsScreen extends StatelessWidget {
           ),
         ),
       ],
+    );
+  }
+
+  Widget defaultTextFormField({
+    required TextEditingController controller,
+    required String hint,
+    TextInputType? keyboardType = TextInputType.text,
+    void Function()? onTap,
+  }) {
+    return TextFormField(
+      validator: (val) {
+        if (val!.isEmpty) {
+          return '$hint is Required';
+        }
+        return null;
+      },
+      onTap: onTap,
+      controller: controller,
+      keyboardType: keyboardType,
+      decoration: InputDecoration(
+        labelText: hint,
+        border: const OutlineInputBorder(),
+      ),
     );
   }
 }
