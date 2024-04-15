@@ -16,3 +16,5 @@ class GetFailedBalanceState extends TransactionsStates {}
 class GetSuccessBalanceState extends TransactionsStates {}
 
 class GetLoadingBalanceState extends TransactionsStates {}
+
+class ComboBoxState extends TransactionsStates {}

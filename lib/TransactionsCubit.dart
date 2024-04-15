@@ -1,3 +1,5 @@
+// ignore_for_file: non_constant_identifier_names
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:codiaeum_tech_project/DataModel.dart';
 import 'package:codiaeum_tech_project/TransactionsStates.dart';
@@ -16,6 +18,9 @@ class TransactionsCubit extends Cubit<TransactionsStates> {
   TextEditingController amountController = TextEditingController();
 
   List<DataModel> models = [];
+  final List<String> items = ['Kabary', 'Daboor', 'Wahba'];
+  int currentIndex = 0;
+  String SelectedItem = 'kabary';
   double balance = 0;
   void CreateTransaction(
       {required String title,
@@ -76,5 +81,16 @@ class TransactionsCubit extends Cubit<TransactionsStates> {
     }).catchError((error) {
       emit(GetFailedBalanceState());
     });
+  }
+
+  void prints() {
+    print(SelectedItem);
+    emit(ComboBoxState());
+  }
+
+  void changeComboBox(String choice) {
+    SelectedItem = choice;
+    emit(ComboBoxState());
+    print(SelectedItem);
   }
 }
