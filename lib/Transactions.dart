@@ -1,5 +1,4 @@
 // ignore_for_file: must_be_immutable
-
 import 'package:codiaeum_tech_project/DataModel.dart';
 import 'package:codiaeum_tech_project/TransactionsCubit.dart';
 import 'package:codiaeum_tech_project/TransactionsStates.dart';
