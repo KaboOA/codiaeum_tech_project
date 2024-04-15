@@ -66,23 +66,12 @@ class TransactionsScreen extends StatelessWidget {
                               context: context,
                               builder: (context1) {
                                 return Padding(
-                                  padding: const EdgeInsets.all(8.0),
+                                  padding: const EdgeInsets.all(16.0),
                                   child: Form(
                                     key: formKey,
                                     child: Column(
                                       mainAxisSize: MainAxisSize.min,
                                       children: [
-                                        const Text(
-                                          'Add Todo',
-                                          textAlign: TextAlign.center,
-                                          style: TextStyle(
-                                            fontSize: 18.0,
-                                            fontWeight: FontWeight.bold,
-                                          ),
-                                        ),
-                                        const SizedBox(
-                                          height: 8.0,
-                                        ),
                                         defaultTextFormField(
                                           controller: cubb.titleController,
                                           hint: 'Title',
@@ -254,23 +243,12 @@ class TransactionsScreen extends StatelessWidget {
                               context: context,
                               builder: (context1) {
                                 return Padding(
-                                  padding: const EdgeInsets.all(8.0),
+                                  padding: const EdgeInsets.all(16.0),
                                   child: Form(
                                     key: formKey,
                                     child: Column(
                                       mainAxisSize: MainAxisSize.min,
                                       children: [
-                                        const Text(
-                                          'Add Todo',
-                                          textAlign: TextAlign.center,
-                                          style: TextStyle(
-                                            fontSize: 18.0,
-                                            fontWeight: FontWeight.bold,
-                                          ),
-                                        ),
-                                        const SizedBox(
-                                          height: 8.0,
-                                        ),
                                         defaultTextFormField(
                                           controller: cubb.titleController,
                                           hint: 'Title',
