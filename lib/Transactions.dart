@@ -57,95 +57,11 @@ class TransactionsScreen extends StatelessWidget {
                     padding: const EdgeInsetsDirectional.only(start: 20.0),
                     child: Row(
                       children: [
-                        InkWell(
-                          borderRadius: BorderRadius.circular(30),
-                          onTap: () {
-                            scaffoldKey.currentState!.showBottomSheet(
-                              (context1) {
-                                return Padding(
-                                  padding: const EdgeInsets.all(16.0),
-                                  child: Form(
-                                    key: formKey,
-                                    child: Column(
-                                      mainAxisSize: MainAxisSize.min,
-                                      children: [
-                                        defaultTextFormField(
-                                          controller: cubb.titleController,
-                                          hint: 'عنوان العملية',
-                                        ),
-                                        const SizedBox(
-                                          height: 16.0,
-                                        ),
-                                        defaultTextFormField(
-                                          controller: cubb.amountController,
-                                          hint: 'المقدار',
-                                          keyboardType: TextInputType.number,
-                                        ),
-                                        const SizedBox(
-                                          height: 16.0,
-                                        ),
-                                        defaultTextFormField(
-                                          controller: cubb.dateController,
-                                          hint: 'تاريخ العملية',
-                                          onTap: () async {
-                                            final date = await showDatePicker(
-                                              context: context,
-                                              initialDate: DateTime.now(),
-                                              firstDate: DateTime.now(),
-                                              lastDate: DateTime(2200),
-                                              currentDate: DateTime.now(),
-                                            );
-                                            if (date != null) {
-                                              cubb.dateController.text =
-                                                  DateFormat('dd-MM-yyyy')
-                                                      .format(date);
-                                            }
-                                          },
-                                        ),
-                                        const SizedBox(
-                                          height: 16.0,
-                                        ),
-                                        TextButton(
-                                          onPressed: () {
-                                            if (formKey.currentState!
-                                                .validate()) {
-                                              cubb.CreateTransaction(
-                                                  income: true,
-                                                  title:
-                                                      cubb.titleController.text,
-                                                  date:
-                                                      cubb.dateController.text,
-                                                  amount: double.parse(cubb
-                                                      .amountController.text));
-                                              cubb.updateBalance(double.parse(
-                                                  cubb.amountController.text));
-                                              cubb.getData();
-                                              cubb.titleController.clear();
-                                              cubb.amountController.clear();
-                                              cubb.dateController.clear();
-
-                                              Navigator.pop(context);
-                                            }
-                                          },
-                                          child: const Text(
-                                            'إرسال',
-                                            style: TextStyle(
-                                              fontSize: 30,
-                                              fontWeight: FontWeight.bold,
-                                              color: Colors.blue,
-                                            ),
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                );
-                              },
-                            );
-                          },
-                          child: Column(
-                            children: [
-                              CircleAvatar(
+                        Column(
+                          children: [
+                            InkWell(
+                              borderRadius: BorderRadius.circular(30),
+                              child: CircleAvatar(
                                 minRadius: 30,
                                 backgroundColor: Colors.lightBlue[50],
                                 child: const Icon(
@@ -153,108 +69,113 @@ class TransactionsScreen extends StatelessWidget {
                                   color: Colors.blue,
                                 ),
                               ),
-                              const SizedBox(height: 4.0),
-                              const Text(
-                                'إضافة',
-                                style: TextStyle(
-                                  fontWeight: FontWeight.bold,
-                                ),
+                              onTap: () {
+                                scaffoldKey.currentState!.showBottomSheet(
+                                  (context1) {
+                                    return Padding(
+                                      padding: const EdgeInsets.all(16.0),
+                                      child: Form(
+                                        key: formKey,
+                                        child: Column(
+                                          mainAxisSize: MainAxisSize.min,
+                                          children: [
+                                            defaultTextFormField(
+                                              controller: cubb.titleController,
+                                              hint: 'عنوان العملية',
+                                            ),
+                                            const SizedBox(
+                                              height: 16.0,
+                                            ),
+                                            defaultTextFormField(
+                                              controller: cubb.amountController,
+                                              hint: 'المقدار',
+                                              keyboardType:
+                                                  TextInputType.number,
+                                            ),
+                                            const SizedBox(
+                                              height: 16.0,
+                                            ),
+                                            defaultTextFormField(
+                                              controller: cubb.dateController,
+                                              hint: 'تاريخ العملية',
+                                              onTap: () async {
+                                                final date =
+                                                    await showDatePicker(
+                                                  context: context,
+                                                  initialDate: DateTime.now(),
+                                                  firstDate: DateTime.now(),
+                                                  lastDate: DateTime(2200),
+                                                  currentDate: DateTime.now(),
+                                                );
+                                                if (date != null) {
+                                                  cubb.dateController.text =
+                                                      DateFormat('dd-MM-yyyy')
+                                                          .format(date);
+                                                }
+                                              },
+                                            ),
+                                            const SizedBox(
+                                              height: 16.0,
+                                            ),
+                                            TextButton(
+                                              onPressed: () {
+                                                if (formKey.currentState!
+                                                    .validate()) {
+                                                  cubb.CreateTransaction(
+                                                      income: true,
+                                                      title: cubb
+                                                          .titleController.text,
+                                                      date: cubb
+                                                          .dateController.text,
+                                                      amount: double.parse(cubb
+                                                          .amountController
+                                                          .text));
+                                                  cubb.updateBalance(
+                                                      double.parse(cubb
+                                                          .amountController
+                                                          .text));
+                                                  cubb.getData();
+                                                  cubb.titleController.clear();
+                                                  cubb.amountController.clear();
+                                                  cubb.dateController.clear();
+
+                                                  Navigator.pop(context);
+                                                }
+                                              },
+                                              child: const Text(
+                                                'إرسال',
+                                                style: TextStyle(
+                                                  fontSize: 30,
+                                                  fontWeight: FontWeight.bold,
+                                                  color: Colors.blue,
+                                                ),
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                    );
+                                  },
+                                );
+                              },
+                            ),
+                            const SizedBox(height: 4.0),
+                            const Text(
+                              'إضافة',
+                              style: TextStyle(
+                                fontWeight: FontWeight.bold,
                               ),
-                            ],
-                          ),
+                            ),
+                          ],
                         ),
                         const SizedBox(
                           width: 30,
                         ),
-                        InkWell(
-                          borderRadius: BorderRadius.circular(30),
-                          onTap: () {
-                            scaffoldKey.currentState!.showBottomSheet(
-                              (context1) {
-                                return Padding(
-                                  padding: const EdgeInsets.all(16.0),
-                                  child: Form(
-                                    key: formKey,
-                                    child: Column(
-                                      mainAxisSize: MainAxisSize.min,
-                                      children: [
-                                        defaultTextFormField(
-                                          controller: cubb.titleController,
-                                          hint: 'عنوان العملية',
-                                        ),
-                                        const SizedBox(
-                                          height: 16.0,
-                                        ),
-                                        defaultTextFormField(
-                                          controller: cubb.amountController,
-                                          hint: 'المقدار',
-                                          keyboardType: TextInputType.number,
-                                        ),
-                                        const SizedBox(
-                                          height: 16.0,
-                                        ),
-                                        defaultTextFormField(
-                                          controller: cubb.dateController,
-                                          hint: 'تاريخ العملية',
-                                          onTap: () async {
-                                            final date = await showDatePicker(
-                                              context: context,
-                                              initialDate: DateTime.now(),
-                                              firstDate: DateTime.now(),
-                                              lastDate: DateTime(2200),
-                                              currentDate: DateTime.now(),
-                                            );
-                                            if (date != null) {
-                                              cubb.dateController.text =
-                                                  DateFormat('dd-MM-yyyy')
-                                                      .format(date);
-                                            }
-                                          },
-                                        ),
-                                        const SizedBox(
-                                          height: 16.0,
-                                        ),
-                                        TextButton(
-                                          onPressed: () {
-                                            if (formKey.currentState!
-                                                .validate()) {
-                                              cubb.CreateTransaction(
-                                                  income: false,
-                                                  title:
-                                                      cubb.titleController.text,
-                                                  date:
-                                                      cubb.dateController.text,
-                                                  amount: double.parse(cubb
-                                                      .amountController.text));
-                                              cubb.updateBalance(-double.parse(
-                                                  cubb.amountController.text));
-                                              cubb.getData();
-
-                                              Navigator.pop(context);
-                                              cubb.titleController.clear();
-                                              cubb.dateController.clear();
-                                              cubb.amountController.clear();
-                                            }
-                                          },
-                                          child: const Text(
-                                            'إرسال',
-                                            style: TextStyle(
-                                              fontSize: 30,
-                                              fontWeight: FontWeight.bold,
-                                              color: Colors.blue,
-                                            ),
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                );
-                              },
-                            );
-                          },
-                          child: Column(
-                            children: [
-                              CircleAvatar(
+                        Column(
+                          children: [
+                            InkWell(
+                              borderRadius: BorderRadius.circular(30),
+                              child: CircleAvatar(
                                 minRadius: 30,
                                 backgroundColor: Colors.lightBlue[50],
                                 child: const Icon(
@@ -262,15 +183,104 @@ class TransactionsScreen extends StatelessWidget {
                                   color: Colors.blue,
                                 ),
                               ),
-                              const SizedBox(height: 4.0),
-                              const Text(
-                                'إرسال',
-                                style: TextStyle(
-                                  fontWeight: FontWeight.bold,
-                                ),
+                              onTap: () {
+                                scaffoldKey.currentState!.showBottomSheet(
+                                  (context1) {
+                                    return Padding(
+                                      padding: const EdgeInsets.all(16.0),
+                                      child: Form(
+                                        key: formKey,
+                                        child: Column(
+                                          mainAxisSize: MainAxisSize.min,
+                                          children: [
+                                            defaultTextFormField(
+                                              controller: cubb.titleController,
+                                              hint: 'عنوان العملية',
+                                            ),
+                                            const SizedBox(
+                                              height: 16.0,
+                                            ),
+                                            defaultTextFormField(
+                                              controller: cubb.amountController,
+                                              hint: 'المقدار',
+                                              keyboardType:
+                                                  TextInputType.number,
+                                            ),
+                                            const SizedBox(
+                                              height: 16.0,
+                                            ),
+                                            defaultTextFormField(
+                                              controller: cubb.dateController,
+                                              hint: 'تاريخ العملية',
+                                              onTap: () async {
+                                                final date =
+                                                    await showDatePicker(
+                                                  context: context,
+                                                  initialDate: DateTime.now(),
+                                                  firstDate: DateTime.now(),
+                                                  lastDate: DateTime(2200),
+                                                  currentDate: DateTime.now(),
+                                                );
+                                                if (date != null) {
+                                                  cubb.dateController.text =
+                                                      DateFormat('dd-MM-yyyy')
+                                                          .format(date);
+                                                }
+                                              },
+                                            ),
+                                            const SizedBox(
+                                              height: 16.0,
+                                            ),
+                                            TextButton(
+                                              onPressed: () {
+                                                if (formKey.currentState!
+                                                    .validate()) {
+                                                  cubb.CreateTransaction(
+                                                      income: false,
+                                                      title: cubb
+                                                          .titleController.text,
+                                                      date: cubb
+                                                          .dateController.text,
+                                                      amount: double.parse(cubb
+                                                          .amountController
+                                                          .text));
+                                                  cubb.updateBalance(
+                                                      -double.parse(cubb
+                                                          .amountController
+                                                          .text));
+                                                  cubb.getData();
+
+                                                  Navigator.pop(context);
+                                                  cubb.titleController.clear();
+                                                  cubb.dateController.clear();
+                                                  cubb.amountController.clear();
+                                                }
+                                              },
+                                              child: const Text(
+                                                'إرسال',
+                                                style: TextStyle(
+                                                  fontSize: 30,
+                                                  fontWeight: FontWeight.bold,
+                                                  color: Colors.blue,
+                                                ),
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                    );
+                                  },
+                                );
+                              },
+                            ),
+                            const SizedBox(height: 4.0),
+                            const Text(
+                              'إرسال',
+                              style: TextStyle(
+                                fontWeight: FontWeight.bold,
                               ),
-                            ],
-                          ),
+                            ),
+                          ],
                         ),
                       ],
                     ),
@@ -345,6 +355,7 @@ class TransactionsScreen extends StatelessWidget {
                 '${model.amount}',
                 style: const TextStyle(
                   fontSize: 15,
+                  fontWeight: FontWeight.bold,
                 ),
               ),
               const Text(
